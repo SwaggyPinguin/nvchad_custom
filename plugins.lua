@@ -171,18 +171,37 @@ local plugins = {
       { "<leader>dw", function() require("dap.ui.widgets").hover() end, desc = "Widgets" },
     },
 
-    -- config = function()
-    --   local Config = require("lazyvim.config")
-    --   vim.api.nvim_set_hl(0, "DapStoppedLine", { default = true, link = "Visual" })
-    --
-    --   for name, sign in pairs(Config.icons.dap) do
-    --     sign = type(sign) == "table" and sign or { sign }
-    --     vim.fn.sign_define(
-    --       "Dap" .. name,
-    --       { text = sign[1], texthl = sign[2] or "DiagnosticInfo", linehl = sign[3], numhl = sign[3] }
-    --     )
-    --   end
-    -- end,
+    config = function()
+      local dap = require "dap"
+      dap.adapters.php = {
+        type = "executable",
+        command = "node",
+        args = { "/home/noah/.config/vscode-php-debug/out/phpDebug.js" },
+      }
+      dap.configurations.php = {
+        {
+          type = "php",
+          request = "launch",
+          name = "Listen for Xdebug",
+          port = 9003,
+          pathMappings = {
+            ["/var/www/bmc"] = "${workspaceFolder}",
+          },
+        },
+      }
+      -- require("configs.dap.php")
+
+      -- local Config = require("lazyvim.config")
+      -- vim.api.nvim_set_hl(0, "DapStoppedLine", { default = true, link = "Visual" })
+      --
+      -- for name, sign in pairs(Config.icons.dap) do
+      --   sign = type(sign) == "table" and sign or { sign }
+      --   vim.fn.sign_define(
+      --     "Dap" .. name,
+      --     { text = sign[1], texthl = sign[2] or "DiagnosticInfo", linehl = sign[3], numhl = sign[3] }
+      --   )
+      -- end
+    end,
   },
 
   {
