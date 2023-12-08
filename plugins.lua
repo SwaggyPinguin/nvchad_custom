@@ -1,4 +1,4 @@
-local overrides = require("custom.configs.overrides")
+local overrides = require "custom.configs.overrides"
 
 ---@type NvPluginSpec[]
 local plugins = {
@@ -25,7 +25,7 @@ local plugins = {
   -- override plugin configs
   {
     "williamboman/mason.nvim",
-    opts = overrides.mason
+    opts = overrides.mason,
   },
 
   {
@@ -58,7 +58,7 @@ local plugins = {
     -- startup by commenting above and uncommenting below:
     -- lazy = false
     opts = overrides.copilot,
-    config = function ()
+    config = function()
       require "custom.configs.copilot"
     end,
   },
@@ -95,17 +95,17 @@ local plugins = {
         config = function(_, opts)
           -- setup dap config by VsCode launch.json file
           -- require("dap.ext.vscode").load_launchjs()
-          local dap = require("dap")
-          local dapui = require("dapui")
+          local dap = require "dap"
+          local dapui = require "dapui"
           dapui.setup(opts)
           dap.listeners.after.event_initialized["dapui_config"] = function()
-            dapui.open({})
+            dapui.open {}
           end
           dap.listeners.before.event_terminated["dapui_config"] = function()
-            dapui.close({})
+            dapui.close {}
           end
           dap.listeners.before.event_exited["dapui_config"] = function()
-            dapui.close({})
+            dapui.close {}
           end
         end,
       },
@@ -183,6 +183,39 @@ local plugins = {
     --     )
     --   end
     -- end,
+  },
+
+  {
+    "stevearc/conform.nvim",
+    lazy = true,
+    event = { "BufReadPre", "BufNewFile" },
+    config = function()
+      local conform = require "conform"
+
+      conform.setup {
+        formatters_by_ft = {
+          php = { "php" },
+        },
+        format_on_save = {
+          lsp_fallback = true,
+          async = false,
+          timeout_ms = 1000,
+        },
+        notify_on_error = true,
+        formatters = {
+          php = {
+            command = "php-cs-fixer",
+            args = {
+              "fix",
+              "$FILENAME",
+              "--config=/home/ndahms/.vscode/.proofit.php-cs.php",
+              "--allow-risky=yes", -- if you have risky stuff in config, if not you dont need it.
+            },
+            stdin = false,
+          },
+        },
+      }
+    end,
   },
 }
 
