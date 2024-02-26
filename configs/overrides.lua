@@ -38,6 +38,7 @@ M.mason = {
 
     -- php
     "php-cs-fixer",
+    "php-debug-adapter",
 
     -- c/cpp stuff
     "clangd",
