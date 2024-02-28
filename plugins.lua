@@ -69,6 +69,23 @@ local plugins = {
 		ft = { "eww", "yuck" },
 	},
 
+	-- Transparent background
+	-- {
+	-- 	"xiyaowong/nvim-transparent",
+	-- 	config = function()
+	-- 		require "custom.configs.transparent"
+	-- 	end,
+	-- 	lazy = false,
+	-- },
+
+	-- Gruvbox theme
+	-- {
+	-- 	"ellisonleao/gruvbox.nvim",
+	-- 	config = function()
+	-- 		require "custom.configs.gruvbox"
+	-- 	end,
+	-- },
+
 	-- To make a plugin not be loaded
 	-- {
 	--   "NvChad/nvim-colorizer.lua",

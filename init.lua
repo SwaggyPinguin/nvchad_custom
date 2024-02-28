@@ -6,10 +6,10 @@ local autocmd = vim.api.nvim_create_autocmd
 --   command = "tabdo wincmd =",
 -- })
 
--- Auto save files when focus is lost 
+-- Auto save files when focus is lost
 autocmd("FocusLost", {
-    pattern = "*",
-    command = "silent! wa",
+	pattern = "*",
+	command = "silent! wa",
 })
 
 -- Run php-cs-fixer on save - NOT WORKING
@@ -18,12 +18,11 @@ autocmd("FocusLost", {
 --     command = "lua vim.lsp.buf.format()"
 -- })
 
--- -- set tab width for specific filetype 
+-- -- set tab width for specific filetype
 autocmd("FileType", {
-    pattern = "php, javascript",
-    command = "setlocal tabstop=4 shiftwidth=4 softtabstop=4"
+	pattern = "php, javascript",
+	command = "setlocal tabstop=4 shiftwidth=4 softtabstop=4",
 })
-
 
 -- OPTIONS
 local opt = vim.opt
