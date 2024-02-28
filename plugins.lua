@@ -79,12 +79,12 @@ local plugins = {
 	-- },
 
 	-- Gruvbox theme
-	-- {
-	-- 	"ellisonleao/gruvbox.nvim",
-	-- 	config = function()
-	-- 		require "custom.configs.gruvbox"
-	-- 	end,
-	-- },
+	{
+		"ellisonleao/gruvbox.nvim",
+		config = function()
+			require "custom.configs.gruvbox"
+		end,
+	},
 
 	-- To make a plugin not be loaded
 	-- {
