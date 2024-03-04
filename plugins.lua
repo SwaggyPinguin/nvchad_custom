@@ -50,13 +50,7 @@ local plugins = {
 	-- GitHub Copilot
 	{
 		"zbirenbaum/copilot.lua",
-		-- Lazy load when event occurs. Events are triggered
-		-- as mentioned in:
-		-- https://vi.stackexchange.com/a/4495/20389
 		event = "InsertEnter",
-		-- You can also have it load at immediately at
-		-- startup by commenting above and uncommenting below:
-		-- lazy = false
 		opts = overrides.copilot,
 		config = function()
 			require "custom.configs.copilot"
@@ -81,24 +75,101 @@ local plugins = {
 	-- Gruvbox theme
 	-- {
 	-- 	"ellisonleao/gruvbox.nvim",
+	-- 	priority = 1000,
+	-- 	lazy = false,
 	-- 	config = function()
 	-- 		require "custom.configs.gruvbox"
 	-- 	end,
 	-- },
 
-	-- To make a plugin not be loaded
+	-- nui.nvim
+	-- { "MunifTanjim/nui.nvim", lazy = true },
+
 	-- {
-	--   "NvChad/nvim-colorizer.lua",
-	--   enabled = false
+	-- 	"rcarriga/nvim-notify",
+	-- 	config = require("notify").setup {
+	-- 		background_colour = "#000000",
+	-- 	},
+	-- 	keys = {
+	-- 		{
+	-- 			"<leader>un",
+	-- 			function()
+	-- 				require("notify").dismiss { silent = true, pending = true }
+	-- 			end,
+	-- 			desc = "Dismiss all Notifications",
+	-- 		},
+	-- 	},
+	-- 	opts = {
+	-- 		timeout = 3000,
+	-- 		max_height = function()
+	-- 			return math.floor(vim.o.lines * 0.75)
+	-- 		end,
+	-- 		max_width = function()
+	-- 			return math.floor(vim.o.columns * 0.75)
+	-- 		end,
+	-- 		on_open = function(win)
+	-- 			vim.api.nvim_win_set_config(win, { zindex = 100 })
+	-- 		end,
+	-- 	},
+	-- 	lazy = true,
 	-- },
 
-	-- All NvChad plugins are lazy-loaded by default
-	-- For a plugin to be loaded, you will need to set either `ft`, `cmd`, `keys`, `event`, or set `lazy = false`
-	-- If you want a plugin to load on startup, add `lazy = false` to a plugin spec, for example
-	-- {
-	--   "mg979/vim-visual-multi",
-	--   lazy = false,
-	-- }
+	-- noice.nvim - new ui
+	{
+		"folke/noice.nvim",
+		event = "VeryLazy",
+		config = function()
+			require "custom.configs.noice"
+		end,
+		opts = {
+			-- stylua: ignore
+			keys = {
+				{ "<S-Enter>",   function() require("noice").redirect(vim.fn.getcmdline()) end,                 mode = "c",                 desc = "Redirect Cmdline" },
+				{ "<leader>snl", function() require("noice").cmd("last") end,                                   desc = "Noice Last Message" },
+				{ "<leader>snh", function() require("noice").cmd("history") end,                                desc = "Noice History" },
+				{ "<leader>sna", function() require("noice").cmd("all") end,                                    desc = "Noice All" },
+				{ "<leader>snd", function() require("noice").cmd("dismiss") end,                                desc = "Dismiss All" },
+				{ "<c-f>",       function() if not require("noice.lsp").scroll(4) then return "<c-f>" end end,  silent = true,              expr = true,              desc = "Scroll forward",  mode = { "i", "n", "s" } },
+				{ "<c-b>",       function() if not require("noice.lsp").scroll(-4) then return "<c-b>" end end, silent = true,              expr = true,              desc = "Scroll backward", mode = { "i", "n", "s" } },
+			},
+		},
+		dependencies = {
+			{
+				"MunifTanjim/nui.nvim",
+				lazy = true,
+			},
+			{
+				"rcarriga/nvim-notify",
+				config = function()
+					require("notify").setup {
+						background_colour = "#000000",
+					}
+				end,
+				keys = {
+					{
+						"<leader>un",
+						function()
+							require("notify").dismiss { silent = true, pending = true }
+						end,
+						desc = "Dismiss all Notifications",
+					},
+				},
+				opts = {
+					timeout = 3000,
+					max_height = function()
+						return math.floor(vim.o.lines * 0.75)
+					end,
+					max_width = function()
+						return math.floor(vim.o.columns * 0.75)
+					end,
+					on_open = function(win)
+						vim.api.nvim_win_set_config(win, { zindex = 100 })
+					end,
+				},
+				lazy = true,
+			},
+		},
+	},
 
 	-- Dap configs
 	{
@@ -259,6 +330,20 @@ local plugins = {
 			}
 		end,
 	},
+
+	-- To make a plugin not be loaded
+	-- {
+	--   "NvChad/nvim-colorizer.lua",
+	--   enabled = false
+	-- },
+
+	-- All NvChad plugins are lazy-loaded by default
+	-- For a plugin to be loaded, you will need to set either `ft`, `cmd`, `keys`, `event`, or set `lazy = false`
+	-- If you want a plugin to load on startup, add `lazy = false` to a plugin spec, for example
+	-- {
+	--   "mg979/vim-visual-multi",
+	--   lazy = false,
+	-- }
 }
 
 return plugins
