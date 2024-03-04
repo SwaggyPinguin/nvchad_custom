@@ -1,5 +1,5 @@
 -- Default options:
-require("gruvbox").setup({
+require("gruvbox").setup {
 	enabled = true,
 	terminal_colors = true, -- add neovim terminal colors
 	undercurl = true,
@@ -23,5 +23,6 @@ require("gruvbox").setup({
 	overrides = {},
 	dim_inactive = false,
 	transparent_mode = true,
-})
-vim.cmd "colorscheme gruvbox"
+}
+-- vim.cmd "colorscheme gruvbox"
+vim.cmd([[colorscheme gruvbox]])
