@@ -12,6 +12,10 @@ M.general = {
 			end,
 			"Toggle transparency",
 		},
+		["<leader>fp"] = {
+			":lua require('telescope.builtin').lsp_document_symbols({ symbols='method' }) <CR>",
+			"Search methods",
+		},
 	},
 	v = {
 		[">"] = { ">gv", "indent" },
